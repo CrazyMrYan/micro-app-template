@@ -1,15 +1,16 @@
 <template>
   <a-layout>
     <a-layout-header class="header">
-      <div class="logo" > hahah </div>
+      <div class="logo" > logo </div>
       <a-menu
         v-model:selectedKeys="selectedKeys1"
         mode="horizontal"
         :style="{ lineHeight: '64px' }"
       >
-        <a-menu-item key="1">用户管理</a-menu-item>
-        <a-menu-item key="2">字典管理</a-menu-item>
-        <a-menu-item key="3">nav 3</a-menu-item>
+        <a-menu-item v-for="item in sitemap" @click="handleChangeMenu(item)" :key="item.key">
+          <component :is="item.icon" />
+          {{ item.title }}
+        </a-menu-item>
       </a-menu>
     </a-layout-header>
     <a-layout>
@@ -17,69 +18,85 @@
         <a-menu
           theme="dark"
           v-model:selectedKeys="selectedKeys2"
-          v-model:openKeys="openKeys"
           mode="inline"
           :style="{ height: '100%', borderRight: 0 }"
         >
-          <a-sub-menu key="sub1">
-            <template #title>
-              <span>
-                <user-outlined />
-                subnav 1
-              </span>
-            </template>
-            <a-menu-item key="1">option1</a-menu-item>
-            <a-menu-item key="2">option2</a-menu-item>
-            <a-menu-item key="3">option3</a-menu-item>
-            <a-menu-item key="4">option4</a-menu-item>
-          </a-sub-menu>
-          <a-sub-menu key="sub2">
-            <template #title>
-              <span>
-                <laptop-outlined />
-                subnav 2
-              </span>
-            </template>
-            <a-menu-item key="5">option5</a-menu-item>
-            <a-menu-item key="6">option6</a-menu-item>
-            <a-menu-item key="7">option7</a-menu-item>
-            <a-menu-item key="8">option8</a-menu-item>
-          </a-sub-menu>
-          <a-sub-menu key="sub3">
-            <template #title>
-              <span>
-                <notification-outlined />
-                subnav 3
-              </span>
-            </template>
-            <a-menu-item key="9">option9</a-menu-item>
-            <a-menu-item key="10">option10</a-menu-item>
-            <a-menu-item key="11">option11</a-menu-item>
-            <a-menu-item key="12">option12</a-menu-item>
-          </a-sub-menu>
+        <template v-for="item in sederMenu">
+          <template v-if="item.children">
+            <a-sub-menu :key="item.key" :title="item.title">
+              <template #title>
+                <span>
+                  <component :is="item.icon" />
+                  {{ item.title }}
+                </span>
+              </template>
+              <template v-for="subItem in item.children">
+                <template v-if="subItem.children">
+                  <recursive-sub-menu :key="subItem.key" :item="subItem"></recursive-sub-menu>
+                </template>
+                <template v-else>
+                  <a-menu-item :key="subItem.key">
+                    <component :is="item.icon" />
+                    {{ subItem.title }}</a-menu-item>
+                </template>
+              </template>
+            </a-sub-menu>
+          </template>
+          <template v-else>
+            <a-menu-item  @click="handleChangeSideMenu(item)" :key="item.key">
+              <component :is="item.icon" />
+              {{ item.title }}
+            </a-menu-item>
+          </template>
+        </template>
         </a-menu>
       </a-layout-sider>
       <a-layout style="padding: 0 24px 24px">
         <a-breadcrumb style="margin: 16px 0">
-          <a-breadcrumb-item>Home</a-breadcrumb-item>
-          <a-breadcrumb-item>List</a-breadcrumb-item>
-          <a-breadcrumb-item>App</a-breadcrumb-item>
+          <a-breadcrumb-item v-for="item in breadcrumbs" :key="item.key">{{ item.title }}</a-breadcrumb-item>
         </a-breadcrumb>
         <a-layout-content
           :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
         >
-          <slot></slot>
+          <slot />
         </a-layout-content>
       </a-layout>
     </a-layout>
   </a-layout>
 </template>
 <script setup>
-import { ref } from 'vue';
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons-vue';
-const selectedKeys1 = ref(['2']);
-const selectedKeys2 = ref(['1']);
-const openKeys = ref(['sub1']);
+import { onMounted, ref } from 'vue';
+import recursiveSubMenu from '../menu';
+import {findBreadcrumbData} from '@/utils/breadcrumb'
+
+const props = defineProps({
+  sitemap: Object,
+})
+
+const sederMenu = ref([]);
+const selectedKeys2 = ref([]);
+const selectedKeys1 = ref([]);
+const breadcrumbs = ref([]);
+
+onMounted(() => {
+  handleChangeMenu(props.sitemap[0]);
+})
+
+const push = (path) => {
+  breadcrumbs.value = findBreadcrumbData(props.sitemap, path);
+  history.pushState(null, path, path);
+};
+
+const handleChangeMenu = (item) =>{
+  sederMenu.value = item.children;
+  push(item.path)
+  selectedKeys1.value = [item.key];
+  selectedKeys2.value = [item.children[0].key];
+}
+
+const handleChangeSideMenu = (item) => {
+  push(item.path);
+}
 </script>
 
 <style scoped>
@@ -90,5 +107,9 @@ const openKeys = ref(['sub1']);
 }
 .logo {
   width: 200px;
+  text-align: center;
+  background-color: #001529;
+  color: #FFF;
+  margin-right: 8px;
 }
 </style>

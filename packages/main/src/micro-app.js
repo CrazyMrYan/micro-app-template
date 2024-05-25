@@ -1,3 +1,5 @@
+import { sitemap } from './common';
+
 const microApps = [
   {
     name: "field-system",
@@ -11,6 +13,7 @@ const apps = microApps.map((item) => {
     ...item,
     container: "#viewport", // 子应用挂载的div
     props: {
+      sitemap,
       routerBase: item.activeRule, // 下发基础路由
     },
   };

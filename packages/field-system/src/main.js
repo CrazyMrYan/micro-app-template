@@ -44,7 +44,7 @@ function render(props = {}) {
 // some code
 renderWithQiankun({
   mount(props) {
-    console.log("viteapp mount");
+    console.log("viteapp mount", props);
     render(props);
     // console.log(instance.config.globalProperties.$route,"444444444");
   },

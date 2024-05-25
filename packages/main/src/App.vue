@@ -4,7 +4,7 @@
       <a-config-provider
         :theme="provider"
       >
-        <layout>
+        <layout :sitemap="sitemap">
           <div id="viewport" ></div>
         </layout>
       </a-config-provider>
@@ -18,8 +18,9 @@ import NProgress from 'nprogress';
 import microApps from './micro-app';
 import Layout from './components/layout/index.vue';
 import provider from './theme/provider'
-
-const isLoading = ref(true);
+import { sitemap } from './common';
+// console.log(getCurrentInstance());
+// const isLoading = ref(true);
 const current = ref('/vue/');
 
 // watch(isLoading, (val) => {

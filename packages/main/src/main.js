@@ -3,11 +3,17 @@ import App from './App.vue'
 import AntD from 'ant-design-vue';
 import 'ant-design-vue/dist/reset.css';
 import  '@/assets/index.scss';
-import { registerMicroApps, start,setDefaultMountApp } from 'qiankun';
+import { registerMicroApps, start, setDefaultMountApp } from 'qiankun';
 import microApps from "./micro-app";
 import "nprogress/nprogress.css";
-const instance= createApp(App).use(AntD).mount('#app')
+import * as Icons from '@ant-design/icons-vue';
 
+const app = createApp(App).use(AntD);
+
+for (const key in Icons) {
+  app.component(key, Icons[key]);
+}
+const instance = app.mount('#app');
 
 // 定义loader方法，loading改变时，将变量赋值给App.vue的data中的isLoading
 function loader(loading) {
