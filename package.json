@@ -1,7 +1,7 @@
 {
-  "name": "qiankun-vite-test",
-  "version": "0.0.2",
-  "description": "qiankun demo",
+  "name": "micro-app-template",
+  "version": "0.0.1",
+  "description": "",
   "private": true,
   "workspaces": [
     "packages/*"
@@ -30,6 +30,6 @@
     "qiankun-example",
     "demo"
   ],
-  "author": "mj",
+  "author": "CrazyMrYan",
   "license": "MIT"
 }

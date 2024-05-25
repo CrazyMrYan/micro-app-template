@@ -1,5 +1,5 @@
 {
-  "name": "vue3-vite",
+  "name": "field-system",
   "version": "0.0.0",
   "scripts": {
     "start": "vite",
