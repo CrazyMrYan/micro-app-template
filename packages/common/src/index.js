@@ -1,9 +1,9 @@
-import store from './store'
 import sdk from './sdk'
 import api from './api'
+import sitemap from './sitemap'
 
 export {
-  store,
   sdk,
-  api
+  api,
+  sitemap
 }

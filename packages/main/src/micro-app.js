@@ -1,4 +1,3 @@
-import store from "./store";
 const microApps = [
   {
     name: "field-system",
@@ -13,7 +12,6 @@ const apps = microApps.map((item) => {
     container: "#viewport", // 子应用挂载的div
     props: {
       routerBase: item.activeRule, // 下发基础路由
-      getGlobalState: store.getGlobalState, // 下发getGlobalState方法
     },
   };
 });
