@@ -1,0 +1,35 @@
+{
+  "name": "qiankun-vite-test",
+  "version": "0.0.2",
+  "description": "qiankun demo",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": " npm run start",
+    "start": "npm-run-all --parallel start:*",
+    "start:main": "cd packages/main && npm start",
+    "start:field-system": "cd packages/field-system && npm start",
+    "build": "npm-run-all build:* && bash ./scripts/bundle.sh",
+    "build:field-system": "cd packages/field-system && npm run build",
+    "build:main": "cd packages/main && npm run build"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.8.0",
+    "lerna": "8.0.1",
+    "eslint-plugin-vue": "^7.20.0"
+  },
+  "keywords": [
+    "vite2",
+    "vue3",
+    "qiankun",
+    "qiankun-example",
+    "demo"
+  ],
+  "author": "mj",
+  "license": "MIT"
+}

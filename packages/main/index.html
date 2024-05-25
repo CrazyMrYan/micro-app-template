@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>QianKun Example</title>
+  </head>
+
+  <body>
+    <div class="mainapp">
+      <div class="mainapp-main">
+        <main id="app" class="main-container"></main>
+      </div>
+    </div>
+
+    <script>
+      function push(subapp) { history.pushState(null, subapp, subapp) }
+    </script>
+    <script type="module" src="/src/main.js"></script>  </body>
+
+</html>
