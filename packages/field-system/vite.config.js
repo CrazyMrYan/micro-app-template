@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd())
   let config = {
         base: isProduction
-        ? '/mirco-app/field-system/' // 生产环境路径
+        ? '/mirco-apps/field-system/' // 生产环境路径
         : '/',
         plugins: [vue(),qiankun('field-system', {useDevMode })],
         resolve: {
